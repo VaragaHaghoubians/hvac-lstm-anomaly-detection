@@ -15,7 +15,7 @@ data, cleaned, feature-engineered, and fed to a **stacked LSTM Autoencoder**
 that detects anomalies without any fault labels: the model trains only on
 normal operation and flags sequences it cannot reconstruct.
 
-> **Data note:** the real BMS data is confidential and not included. The repo
+> **Data note:** The real BMS data is confidential and not included. The repo
 > ships a [synthetic data generator](data/README.md) that reproduces the exact
 > BMS export format, so the entire pipeline runs out of the box.
 
@@ -95,14 +95,14 @@ python scripts/1_data_preprocessing/5_cleaning_and_interpolation.py
 # 3. Engineer features
 python scripts/4_feature_engineering/1_feature_engineering.py
 
-# 4. Detect anomalies (needs tensorflow — see scripts/5_lstm_anomaly_detection/requirements.txt)
+# 4. Detect anomalies (needs TensorFlow — see scripts/5_lstm_anomaly_detection/requirements.txt)
 cd scripts/5_lstm_anomaly_detection
 python 0_test_setup.py     # verify environment
 python 1_main.py           # train + evaluate LSTM-AE
 ```
 
 Everything is driven by `config.ini` — set `building_id`, `ahu_unit`, `season`,
-`year` once and all file paths, date ranges, and thresholds follow.
+`year` once, and all file paths, date ranges, and thresholds follow.
 
 ## Method highlights
 

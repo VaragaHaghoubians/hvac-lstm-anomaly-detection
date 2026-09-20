@@ -9,7 +9,7 @@
 [![TensorFlow](https://img.shields.io/badge/TensorFlow-Keras-orange.svg)](https://www.tensorflow.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-Multivariate time-series data from an Air Handling Unit (AHU) — supply/return/
+Multivariate time-series data from an Air Handling Unit (AHU), supply/return/
 saturation temperatures, setpoints, fan modulation, is merged with weather
 data, cleaned, feature-engineered, and fed to a **stacked LSTM Autoencoder**
 that detects anomalies without any fault labels: the model trains only on

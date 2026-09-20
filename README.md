@@ -53,7 +53,6 @@ flowchart LR
     C --> E[3 Analysis<br/>setpoints · statistics · seasons]
     C --> F[4 Feature engineering<br/>50+ features · correlations]
     F --> G[5 LSTM Autoencoder<br/>anomaly detection + Optuna]
-    F --> H[6 Energy forecasting<br/>RF · XGBoost]
     G --> I[7 Energy manager report]
     E --> I
 ```
@@ -72,8 +71,7 @@ flowchart LR
     ├── 3_data_analysis/            # Setpoint tracking, descriptive stats, season comparison
     ├── 4_feature_engineering/      # Feature creation, correlation & importance analysis
     ├── 5_lstm_anomaly_detection/   # 11-module LSTM-AE system (see its README)
-    ├── 6_energy_forecasting/       # Linear / Random Forest / XGBoost forecasting
-    └── 7_energy_manager_report/    # Consolidated report for facility managers
+
 ```
 
 ## Quick start

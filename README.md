@@ -26,7 +26,7 @@ normal operation and flags sequences it cannot reconstruct.
 Full write-up: [`LSTM_AE_Results_Report.md`](scripts/5_lstm_anomaly_detection/LSTM_AE_Results_Report.md)
 
 - **Per-feature reconstruction error (RMSE, % of signal range):** supply air
-  3.3% (summer) / 4.7% (winter); return air down to 0.7% in winter —
+  3.3% (summer) / 4.7% (winter); return air down to 0.7% in winter.
   near-perfect reconstruction of the most schedule-driven signal.
 - **Detected a critical winter anomaly (~2026-02-12):** reconstruction error
   spiked to ≈5× the seasonal baseline, isolated by per-feature error
@@ -106,7 +106,7 @@ Everything is driven by `config.ini` - set `building_id`, `ahu_unit`, `season`,
 
 ## Method highlights
 
-- **Leak-free chronological splits:** 70/15/15 by calendar week, no shuffling —
+- **Leak-free chronological splits:** 70/15/15 by calendar week, no shuffling,
   train on early season, test on late season, mirroring real deployment.
 - **RobustScaler fitted on train only**, with automatic post-scaling variance
   checks that drop flatlined sensors (e.g., a fan locked at 80% all winter).
@@ -131,7 +131,7 @@ Matplotlib · Seaborn · SciPy
 · [LinkedIn](https://www.linkedin.com/in/varagahaghoubians) · varaga.haghoubians@gmail.com
 
 Thesis: *Advanced Data Analysis for HVAC System Characterization and Evaluation
-of Environmental Comfort and Energy Performance* — developed with real BMS data
+of Environmental Comfort and Energy Performance*, developed with real BMS data
 in collaboration with Eurix and the University of Turin.
 
 ## License

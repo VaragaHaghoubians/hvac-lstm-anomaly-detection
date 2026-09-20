@@ -1,7 +1,7 @@
 # HVAC Analytics & LSTM Anomaly Detection
 
 > End-to-end pipeline for HVAC performance analysis and unsupervised anomaly
-> detection on real Building Management System (BMS) sensor data —
+> detection on real Building Management System (BMS) sensor data,
 > MSc thesis project (University of Turin) developed in industry collaboration
 > with [Eurix](https://www.eurix.it/).
 
@@ -10,7 +10,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 Multivariate time-series data from an Air Handling Unit (AHU) — supply/return/
-saturation temperatures, setpoints, fan modulation — is merged with weather
+saturation temperatures, setpoints, fan modulation, is merged with weather
 data, cleaned, feature-engineered, and fed to a **stacked LSTM Autoencoder**
 that detects anomalies without any fault labels: the model trains only on
 normal operation and flags sequences it cannot reconstruct.
@@ -30,7 +30,7 @@ Full write-up: [`LSTM_AE_Results_Report.md`](scripts/5_lstm_anomaly_detection/LS
   near-perfect reconstruction of the most schedule-driven signal.
 - **Detected a critical winter anomaly (~2026-02-12):** reconstruction error
   spiked to ≈5× the seasonal baseline, isolated by per-feature error
-  attribution to the supply-temperature circuit — flagged for physical
+  attribution to the supply-temperature circuit, flagged for physical
   inspection (sensor, actuator, or heating-coil fault).
 - **Dynamic EMA thresholding** adapts to slow regime changes (autumn outdoor
   temperature drop) without false-positive floods, while still catching
@@ -38,7 +38,7 @@ Full write-up: [`LSTM_AE_Results_Report.md`](scripts/5_lstm_anomaly_detection/LS
   slow-degradation monitoring.
 - **Physics-informed feature selection:** exogenous (weather) and
   algebraically-derived signals are excluded from reconstruction and handled
-  as rule-based checks instead — the model scores *"is the AHU behaving
+  as rule-based checks instead; the model scores *"is the AHU behaving
   correctly given the conditions?"*, not *"did the weather change?"*.
 - Hyperparameters tuned with **Optuna** per season (best-trial configs
   included in the repo).
@@ -95,13 +95,13 @@ python scripts/1_data_preprocessing/5_cleaning_and_interpolation.py
 # 3. Engineer features
 python scripts/4_feature_engineering/1_feature_engineering.py
 
-# 4. Detect anomalies (needs TensorFlow — see scripts/5_lstm_anomaly_detection/requirements.txt)
+# 4. Detect anomalies (needs TensorFlow - see scripts/5_lstm_anomaly_detection/requirements.txt)
 cd scripts/5_lstm_anomaly_detection
 python 0_test_setup.py     # verify environment
 python 1_main.py           # train + evaluate LSTM-AE
 ```
 
-Everything is driven by `config.ini` — set `building_id`, `ahu_unit`, `season`,
+Everything is driven by `config.ini` - set `building_id`, `ahu_unit`, `season`,
 `year` once, and all file paths, date ranges, and thresholds follow.
 
 ## Method highlights
@@ -126,7 +126,7 @@ Matplotlib · Seaborn · SciPy
 
 ## Author
 
-**Varaga Haghoubians** — MSc Stochastics & Data Science, University of Turin
+**Varaga Haghoubians, **MSc Stochastics & Data Science, University of Turin
 · ML/AI Engineer Intern @ Eurix
 · [LinkedIn](https://www.linkedin.com/in/varagahaghoubians) · varaga.haghoubians@gmail.com
 

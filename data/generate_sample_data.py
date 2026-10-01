@@ -17,9 +17,9 @@ Generated files (written next to this script):
 Injected events (so the analysis has something to find):
   - Random multi-hour data gaps in each season
   - Occasional sensor spike outliers (~85 °C glitches)
-  - A 36-hour heating-coil fault around 2026-02-12 (supply temperature
-    collapses while fan modulation stays high) — mirrors the kind of
-    critical anomaly the LSTM autoencoder flagged on the real data.
+  - A synthetic spike around 2026-02-12 (supply temperature drops for 36
+    hours while fan modulation stays high). This is not the internship
+    event and does not confirm a coil, sensor, or actuator fault.
 
 Usage:
     python generate_sample_data.py
@@ -118,8 +118,8 @@ def build_season(index, mode, t_out):
 
 
 def inject_faults(df, n_gaps, n_spikes, coil_fault=None):
-    """Add realistic data-quality problems and (optionally) a physical fault."""
-    # Heating-coil fault: supply temperature collapses while the fan keeps running
+    """Add gaps, sensor spikes, and an optional synthetic supply-temperature drop."""
+    # Synthetic spike: supply temperature drops while the fan keeps running
     if coil_fault is not None:
         start, hours = coil_fault
         i0 = df.index[df["Time"] >= start][0]

@@ -21,17 +21,20 @@ normal operation and flags sequences it cannot reconstruct.
 
 ---
 
-## Key results (real data, two seasons)
+## Internship results (confidential Eurix extract, two seasons)
 
-Full write-up: [`LSTM_AE_Results_Report.md`](scripts/5_lstm_anomaly_detection/LSTM_AE_Results_Report.md)
+These figures are from the Eurix internship run on Building C1, AHU UTA1.
+The public sample from [`generate_sample_data.py`](data/generate_sample_data.py)
+cannot reproduce them. Full write-up:
+[`LSTM_AE_Results_Report.md`](scripts/5_lstm_anomaly_detection/LSTM_AE_Results_Report.md)
 
 - **Per-feature reconstruction error (RMSE, % of signal range):** supply air
   3.3% (summer) / 4.7% (winter); return air down to 0.7% in winter.
   near-perfect reconstruction of the most schedule-driven signal.
-- **Detected a critical winter anomaly (~2026-02-12):** reconstruction error
-  spiked to ≈5× the seasonal baseline, isolated by per-feature error
-  attribution to the supply-temperature circuit, flagged for physical
-  inspection (sensor, actuator, or heating-coil fault).
+- **Suspected winter anomaly (~2026-02-12):** on the company extract,
+  reconstruction error spiked to ≈5× the seasonal baseline. The report
+  flags it for physical inspection. No coil, sensor, or actuator fault
+  was confirmed.
 - **Dynamic EMA thresholding** adapts to slow regime changes (autumn outdoor
   temperature drop) without false-positive floods, while still catching
   localized spikes; a static 95th-percentile threshold is available for

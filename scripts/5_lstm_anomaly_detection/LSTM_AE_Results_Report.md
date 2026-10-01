@@ -5,6 +5,7 @@
 **Institution:** Università degli Studi di Torino (UNITO)  
 **System:** HVAC, Air Handling Unit UTA1, Building C1  
 **Report Date:** 25 February 2026  
+**Provenance:** Internship results on the confidential Eurix BMS extract. The public sample from `data/generate_sample_data.py` cannot reproduce these figures.  
 
 ---
 
@@ -259,9 +260,9 @@ The winter results present an unusual pattern: the **test anomaly rate (5.43%) i
 
 This is **not a model failure**; it confirms the model generalized beyond its training distribution and correctly identifies the late-winter operation as largely nominal.
 
-**Critical anomaly event, circa 2026-02-12**: The EMA timeline plot shows a pronounced spike reaching MAE ≈ 0.5, clearly the largest anomaly event in the entire winter dataset. This is approximately **5× the typical winter baseline** (MAE ≈ 0.09–0.10). The EMA threshold rises in response, but the spike still exceeds it significantly, triggering a cluster of anomaly flags. This event warrants physical investigation (sensor fault, actuator fault, heating coil issue, or external supply problem).
+**Suspected anomaly, circa 2026-02-12**: The EMA timeline plot shows a pronounced spike reaching MAE ≈ 0.5, the largest reconstruction-error event in the winter extract. This is approximately **5× the typical winter baseline** (MAE ≈ 0.09–0.10). The EMA threshold rises in response, but the spike still exceeds it, and a cluster of windows is flagged. This is a suspected anomaly on the company extract. It warrants physical inspection. This study does not confirm a coil, sensor, or actuator fault.
 
-**February 17–18 cluster**: A sustained elevation in reconstruction error toward the very end of the test period also generates multiple anomaly detections, suggesting a possible emerging operational change or fault developing in the final days of the monitored period.
+**February 17–18 cluster**: A sustained elevation in reconstruction error toward the very end of the test period also generates multiple anomaly detections, suggesting a possible emerging operational change. This study does not confirm a fault.
 
 ### 4.4 Feature-Wise Error Analysis
 
@@ -283,7 +284,7 @@ The winter feature-error distribution is strikingly different from summer:
 
 **Temperatura Ripresa (F2)**: Excellent reconstruction quality throughout the entire winter period. The model precisely tracks the slow daily arc of return air temperature, from nighttime lows (~21.5°C) to occupied-hours peaks (~24.5°C), the most consistent signal and the strongest evidence that the model has learned genuine winter HVAC physics.
 
-**Temperatura Saturazione (F3)**: Like F1, the reconstruction smooths the high-frequency heating-coil oscillations but captures the slower trend. Notable deviation around 2026-02-12 (the major anomaly event ): both real and reconstructed TS diverge significantly, confirming that the anomaly event affected the coil's thermal behavior.
+**Temperatura Saturazione (F3)**: Like F1, the reconstruction smooths the high-frequency heating-coil oscillations but captures the slower trend. Around 2026-02-12 (the suspected anomaly), measured and reconstructed saturation temperature both diverge. That divergence does not confirm a coil, sensor, or actuator fault.
 
 ---
 
@@ -326,8 +327,8 @@ The winter feature-error distribution is strikingly different from summer:
 |---|---|---|
 | Sustained elevated error, late Sep 2025 | Summer | Shoulder-season regime transition |
 | Spike cluster, Oct 5–9, 2025 | Summer | Sharp outdoor temperature drop combined with changing cooling load |
-| Large isolated spike to MAE ≈ 0.50, circa Feb 12, 2026 | Winter | Probable actuator/sensor fault or heating supply interruption |
-| Elevated error cluster, Feb 17–18, 2026 | Winter | End-of-season operational change or emerging fault |
+| Large isolated spike to MAE ≈ 0.50, circa Feb 12, 2026 | Winter | Suspected anomaly on the company extract; no fault confirmed |
+| Elevated error cluster, Feb 17–18, 2026 | Winter | Possible end-of-season operational change; no fault confirmed |
 | Scattered isolated detections throughout both seasons | Both | Transient control events (setpoint changes, fan switching), partially filtered by persistence requirement |
 
 ---
@@ -417,7 +418,7 @@ The LSTM Autoencoder pipeline successfully learned normal HVAC operation pattern
 
 3. **Feature-specific behavior consistent with HVAC physics**: F3 (Temperatura Saturazione) is the dominant error source in summer (coil conditions sensitive to outdoor temperature), while F1 (Temperatura Mandata) is the dominant source in winter (rapid heating-cycle oscillations challenge the model's temporal context). F2 (Temperatura Ripresa) is consistently the most stable feature across both seasons, reflecting the high thermal inertia of building return air.
 
-4. **A significant anomaly event in winter circa 2026-02-12** (MAE spike to ≈0.50, approximately 5× the seasonal baseline) is the strongest candidate for a genuine mechanical or control fault and warrants investigation against physical inspection records.
+4. **A suspected anomaly in winter circa 2026-02-12** (MAE spike to ≈0.50, approximately 5× the seasonal baseline). It is the largest reconstruction-error event in the winter extract and warrants physical inspection. No coil, sensor, or actuator fault was confirmed.
 
 5. **The EMA dynamic threshold** prevents the false-positive flood that would occur with a fixed threshold in the face of seasonal regime variation, at the cost of potential "boiling frog" insensitivity to very gradual degradation. A hybrid approach — using EMA for real-time monitoring and a fixed 95th-percentile threshold for seasonal drift detection, is recommended for production use.
 
@@ -431,7 +432,7 @@ This project implements a pipeline that:
 
 ### 7.3 Recommendations for Operational Deployment
 
-1. **Investigate the February 12, 2026 anomaly event** against maintenance logs, BMS event history, and physical inspection data. The magnitude (5× baseline) and duration (several consecutive windows) make this the study's most operationally significant finding.
+1. **Inspect the 12 February 2026 suspected anomaly** against maintenance logs, BMS event history, and physical inspection data. The magnitude (5× baseline) and duration (several consecutive windows) make it the largest winter reconstruction-error event in this study. No fault has been confirmed.
 
 2. **Switch to the static 95th-percentile threshold** for long-term degradation monitoring, reserving the EMA threshold for sudden-fault detection in real-time monitoring contexts.
 

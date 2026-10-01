@@ -27,10 +27,10 @@ This creates:
 | `LIMF_from_2025-07-01_to_2026-02-18.csv` | Weather station data (temperature, relative humidity) |
 
 The generator injects realistic problems for the pipeline to find: multi-hour
-transmission gaps, sensor spike outliers, and a 36-hour heating-coil fault
-around **2026-02-12** (supply temperature collapses while the fan keeps
-running) — the same kind of critical anomaly the LSTM autoencoder flagged in
-the real data.
+transmission gaps, sensor spike outliers, and a **synthetic spike** around
+**2026-02-12** (supply temperature drops while the fan keeps running). That
+spike is not the internship event and is not a confirmed coil, sensor, or
+actuator fault.
 
 ## Data dictionary (AHU files)
 
@@ -46,7 +46,7 @@ the real data.
 | `Mod. V. Mandata` | Supply fan modulation | % |
 | `Mod. V. Ripresa` | Return fan modulation | % |
 
-> Note: results quoted in the project README and in
-> `scripts/5_lstm_anomaly_detection/LSTM_AE_Results_Report.md` were obtained on
-> the **real** data; running the pipeline on synthetic data will reproduce the
-> workflow, not those exact numbers.
+> Note: figures in the project README and in
+> `scripts/5_lstm_anomaly_detection/LSTM_AE_Results_Report.md` are internship
+> results on the confidential Eurix extract. The public sample cannot
+> reproduce them. Running the pipeline here reproduces the workflow only.

@@ -69,6 +69,8 @@ Your pipeline uses chronological evaluation:
 
 This is set in `config.ini` under `[lstm_autoencoder]`.
 
+The preprocessor ignores `split_strategy` and always splits by calendar week in order.
+
 ### Thresholding
 
 Thresholding is controlled by:

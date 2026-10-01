@@ -67,9 +67,9 @@ Your pipeline uses chronological evaluation:
 
 - `split_strategy = chronological` (strict out-of-time generalization)
 
-This is set in `config.ini` under `[lstm_autoencoder]`.
+`config.ini` must say `chronological`. The preprocessor does not implement `stratified_weekly`; that value is ignored.
 
-The preprocessor ignores `split_strategy` and always splits by calendar week in order.
+This is set in `config.ini` under `[lstm_autoencoder]`.
 
 ### Thresholding
 

@@ -21,30 +21,11 @@ normal operation and flags sequences it cannot reconstruct.
 
 ---
 
-## Internship results (confidential Eurix extract, two seasons)
+## Example results on synthetic data
 
-These figures are from the Eurix internship run on Building C1, AHU UTA1.
-The public sample from [`generate_sample_data.py`](data/generate_sample_data.py)
-cannot reproduce them. Full write-up:
-[`LSTM_AE_Results_Report.md`](scripts/5_lstm_anomaly_detection/LSTM_AE_Results_Report.md)
+The figures below come from the synthetic BMS-format generator in `data/generate_sample_data.py`. They show that the pipeline runs. They are not measurements from the Eurix building, and they cannot be reproduced from the confidential BMS extract, which is not in this repo.
 
-- **Per-feature reconstruction error (RMSE, % of signal range):** supply air
-  3.3% (summer) / 4.7% (winter); return air down to 0.7% in winter.
-  near-perfect reconstruction of the most schedule-driven signal.
-- **Suspected winter anomaly (~2026-02-12):** on the company extract,
-  reconstruction error spiked to ≈5× the seasonal baseline. The report
-  flags it for physical inspection. No coil, sensor, or actuator fault
-  was confirmed.
-- **Dynamic EMA thresholding** adapts to slow regime changes (autumn outdoor
-  temperature drop) without false-positive floods, while still catching
-  localized spikes; a static 95th-percentile threshold is available for
-  slow-degradation monitoring.
-- **Physics-informed feature selection:** exogenous (weather) and
-  algebraically-derived signals are excluded from reconstruction and handled
-  as rule-based checks instead; the model scores *"is the AHU behaving
-  correctly given the conditions?"*, not *"did the weather change?"*.
-- Hyperparameters tuned with **Optuna** per season (best-trial configs
-  included in the repo).
+The winter spike is a synthetic event in the generated series, not a confirmed sensor, actuator, or coil fault.
 
 ## Pipeline
 
@@ -107,8 +88,7 @@ Everything is driven by `config.ini` - set `building_id`, `ahu_unit`, `season`,
 
 ## Method highlights
 
-- **Leak-free chronological splits:** 70/15/15 by calendar week, no shuffling,
-  train on early season, test on late season, mirroring real deployment.
+- **Chronological week split:** first 70% of weeks train, next 15% validation, last 15% test. `3_preprocessor.py` always does this. It does not read `split_strategy`.
 - **RobustScaler fitted on train only**, with automatic post-scaling variance
   checks that drop flatlined sensors (e.g., a fan locked at 80% all winter).
 - **Clean-training mask:** sequences containing system-off periods, physical
@@ -132,11 +112,9 @@ Matplotlib · Seaborn · SciPy
 · [LinkedIn](https://www.linkedin.com/in/varagahaghoubians) · varaga.haghoubians@gmail.com
 
 Thesis: *Advanced Data Analysis for HVAC System Characterization and Evaluation
-of Environmental Comfort and Energy Performance*, developed with real BMS data
-in collaboration with Eurix and the University of Turin.
+of Environmental Comfort and Energy Performance*. Pipeline written during a curricular internship at Eurix. Published data is synthetic because the BMS extract is confidential.
 
 ## License
 
-Code is released under the [MIT License](LICENSE). The real sensor data
-underlying the published results is confidential and remains the property of
-the data owners.
+Code is released under the [MIT License](LICENSE). The confidential BMS extract
+is not in this repository.

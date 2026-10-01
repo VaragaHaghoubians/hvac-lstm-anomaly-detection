@@ -2,7 +2,7 @@
 ## Project Report, Building C1, AHU UTA1
 ### Summer 2025 & Winter 2026
 
-**Data status:** example report on synthetic data shaped like a BMS export. Building and AHU names in this file are labels in the generator, not a published company dataset. The winter spike is a synthetic event, not a confirmed fault.
+**Data status:** real-data results from the confidential Eurix BMS extract (Building C1, AHU UTA1). The public sample from `data/generate_sample_data.py` cannot reproduce these figures. The winter spike is a suspected anomaly on that extract, not a confirmed coil, sensor, or actuator fault.
 
 **Institution:** Università degli Studi di Torino (UNITO)  
 **System:** HVAC, Air Handling Unit UTA1, Building C1  
@@ -261,7 +261,7 @@ The winter results present an unusual pattern: the **test anomaly rate (5.43%) i
 
 This is **not a model failure**; it confirms the model generalized beyond its training distribution and correctly identifies the late-winter operation as largely nominal.
 
-**Synthetic spike, circa 2026-02-12**: The EMA timeline plot shows a pronounced spike reaching MAE ≈ 0.5, the largest reconstruction-error event in the winter series. This is approximately **5× the typical winter baseline** (MAE ≈ 0.09–0.10). The EMA threshold rises in response, but the spike still exceeds it, and a cluster of windows is flagged. This spike is a synthetic event in the generated series. It is not a confirmed sensor, actuator, or coil fault.
+**Suspected anomaly, circa 2026-02-12**: The EMA timeline plot shows a pronounced spike reaching MAE ≈ 0.5, the largest reconstruction-error event in the winter extract. This is approximately **5× the typical winter baseline** (MAE ≈ 0.09–0.10). The EMA threshold rises in response, but the spike still exceeds it, and a cluster of windows is flagged. This is a suspected anomaly on the company extract. It warrants physical inspection. This study does not confirm a coil, sensor, or actuator fault.
 
 **February 17–18 cluster**: A sustained elevation in reconstruction error toward the very end of the test period also generates multiple anomaly detections, suggesting a possible emerging operational change. This study does not confirm a fault.
 
@@ -285,7 +285,7 @@ The winter feature-error distribution is strikingly different from summer:
 
 **Temperatura Ripresa (F2)**: Excellent reconstruction quality throughout the entire winter period. The model precisely tracks the slow daily arc of return air temperature, from nighttime lows (~21.5°C) to occupied-hours peaks (~24.5°C), the most consistent signal and the strongest evidence that the model has learned genuine winter HVAC physics.
 
-**Temperatura Saturazione (F3)**: Like F1, the reconstruction smooths the high-frequency heating-coil oscillations but captures the slower trend. Around 2026-02-12 (the synthetic spike), measured and reconstructed saturation temperature both diverge. That divergence is not a confirmed sensor, actuator, or coil fault.
+**Temperatura Saturazione (F3)**: Like F1, the reconstruction smooths the high-frequency heating-coil oscillations but captures the slower trend. Around 2026-02-12 (the suspected anomaly), measured and reconstructed saturation temperature both diverge. That divergence does not confirm a coil, sensor, or actuator fault.
 
 ---
 
@@ -328,7 +328,7 @@ The winter feature-error distribution is strikingly different from summer:
 |---|---|---|
 | Sustained elevated error, late Sep 2025 | Summer | Shoulder-season regime transition |
 | Spike cluster, Oct 5–9, 2025 | Summer | Sharp outdoor temperature drop combined with changing cooling load |
-| Large isolated spike to MAE ≈ 0.50, circa Feb 12, 2026 | Winter | Synthetic event in the generated series; not a confirmed fault |
+| Large isolated spike to MAE ≈ 0.50, circa Feb 12, 2026 | Winter | Suspected anomaly on the company extract; no fault confirmed |
 | Elevated error cluster, Feb 17–18, 2026 | Winter | Possible end-of-season operational change; no fault confirmed |
 | Scattered isolated detections throughout both seasons | Both | Transient control events (setpoint changes, fan switching), partially filtered by persistence requirement |
 
@@ -419,7 +419,7 @@ The LSTM Autoencoder pipeline successfully learned normal HVAC operation pattern
 
 3. **Feature-specific behavior consistent with HVAC physics**: F3 (Temperatura Saturazione) is the dominant error source in summer (coil conditions sensitive to outdoor temperature), while F1 (Temperatura Mandata) is the dominant source in winter (rapid heating-cycle oscillations challenge the model's temporal context). F2 (Temperatura Ripresa) is consistently the most stable feature across both seasons, reflecting the high thermal inertia of building return air.
 
-4. **A synthetic spike in winter circa 2026-02-12** (MAE spike to ≈0.50, approximately 5× the seasonal baseline). It is the largest reconstruction-error event in the winter series. It is not a confirmed sensor, actuator, or coil fault.
+4. **A suspected anomaly in winter circa 2026-02-12** (MAE spike to ≈0.50, approximately 5× the seasonal baseline). It is the largest reconstruction-error event in the winter extract and warrants physical inspection. No coil, sensor, or actuator fault was confirmed.
 
 5. **The EMA dynamic threshold** prevents the false-positive flood that would occur with a fixed threshold in the face of seasonal regime variation, at the cost of potential "boiling frog" insensitivity to very gradual degradation. A hybrid approach — using EMA for real-time monitoring and a fixed 95th-percentile threshold for seasonal drift detection, is recommended for production use.
 
@@ -433,7 +433,7 @@ This project implements a pipeline that:
 
 ### 7.3 Recommendations for Operational Deployment
 
-1. **Treat the 12 February 2026 spike as a synthetic event** in the generated series. It is not a maintenance finding and not a confirmed sensor, actuator, or coil fault.
+1. **Inspect the 12 February 2026 suspected anomaly** against maintenance logs and physical inspection records. It is the largest winter reconstruction-error event in this study. No coil, sensor, or actuator fault was confirmed.
 
 2. **Switch to the static 95th-percentile threshold** for long-term degradation monitoring, reserving the EMA threshold for sudden-fault detection in real-time monitoring contexts.
 

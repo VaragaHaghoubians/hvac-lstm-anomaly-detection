@@ -47,6 +47,6 @@ actuator fault.
 | `Mod. V. Ripresa` | Return fan modulation | % |
 
 > Note: figures in the project README and in
-> `scripts/5_lstm_anomaly_detection/LSTM_AE_Results_Report.md` are internship
-> results on the confidential Eurix extract. The public sample cannot
+> `scripts/5_lstm_anomaly_detection/LSTM_AE_Results_Report.md` are real-data
+> results from the confidential Eurix extract. The public sample cannot
 > reproduce them. Running the pipeline here reproduces the workflow only.

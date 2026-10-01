@@ -21,11 +21,11 @@ normal operation and flags sequences it cannot reconstruct.
 
 ---
 
-## Example results on synthetic data
+## Real-data results (confidential Eurix extract)
 
-The figures below come from the synthetic BMS-format generator in `data/generate_sample_data.py`. They show that the pipeline runs. They are not measurements from the Eurix building, and they cannot be reproduced from the confidential BMS extract, which is not in this repo.
+The numbers in [`LSTM_AE_Results_Report.md`](scripts/5_lstm_anomaly_detection/LSTM_AE_Results_Report.md) are real-data results from the Eurix internship on Building C1, AHU UTA1. The public sample from [`generate_sample_data.py`](data/generate_sample_data.py) cannot reproduce them. The confidential BMS extract is not in this repo.
 
-The winter spike is a synthetic event in the generated series, not a confirmed sensor, actuator, or coil fault.
+The winter spike in that report is a suspected anomaly on the company extract. No coil, sensor, or actuator fault was confirmed.
 
 ## Pipeline
 
@@ -108,11 +108,11 @@ Matplotlib · Seaborn · SciPy
 ## Author
 
 **Varaga Haghoubians, **MSc Stochastics & Data Science, University of Turin
-· ML/AI Engineer Intern @ Eurix
+· Data Analyst · Industrial Engineering · Operations
 · [LinkedIn](https://www.linkedin.com/in/varagahaghoubians) · varaga.haghoubians@gmail.com
 
 Thesis: *Advanced Data Analysis for HVAC System Characterization and Evaluation
-of Environmental Comfort and Energy Performance*. Pipeline written during a curricular internship at Eurix. Published data is synthetic because the BMS extract is confidential.
+of Environmental Comfort and Energy Performance*. Pipeline written during a curricular internship at Eurix. The published results are real-data results from the confidential BMS extract. The synthetic generator cannot reproduce them.
 
 ## License
 
